@@ -1,0 +1,20 @@
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Redirect to public folder if accessing root
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ public/index.php [L]
+
+# Ensure users land on correct pages after login
+RewriteCond %{REQUEST_URI} ^/login$ [NC]
+RewriteRule ^login$ backend/login.php [L]
+
+# Fix incorrect login redirection
+RewriteCond %{THE_REQUEST} \s/login\.php [NC]
+RewriteRule ^login.php$ /VetDirect/public/login.php [L,R=302]
+
+# Clean URLs for specific sections
+RewriteRule ^admin/(.*)$ admin/$1 [L]
+RewriteRule ^doctor/(.*)$ doctor/$1 [L]
+RewriteRule ^user/(.*)$ user/$1 [L]
+RewriteRule ^backend/(.*)$ backend/$1 [L]
